@@ -33,7 +33,7 @@ defmodule ExAliyunOpenapi.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
-      {:tesla, "~> 1.2", override: true},
+      {:tesla, "~> 1.2"},
       {:jason, ">= 1.0.0"},
       {:timex, "~> 3.4"},
       {:elixir_uuid, "~> 1.2"}
