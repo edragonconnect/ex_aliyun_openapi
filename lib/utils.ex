@@ -1,5 +1,7 @@
 defmodule ExAliyunOpenapi.Utils do
-  @moduledoc false
+  @moduledoc """
+  Utils for Aliyun OpenAPI.
+  """
 
   def get_query(common_params, params, access_key_secret) do
     sign_params = common_params |> Map.merge(params)
@@ -22,7 +24,7 @@ defmodule ExAliyunOpenapi.Utils do
     |> Base.encode64()
   end
 
-  def format_string_to_sign(params) do
+  defp format_string_to_sign(params) do
     format_string =
       params
       |> Map.keys()
@@ -36,7 +38,7 @@ defmodule ExAliyunOpenapi.Utils do
     "POST&%2F&" <> format_string
   end
 
-  def to_keyword_list(map) do
+  defp to_keyword_list(map) do
     map
     |> Enum.map(fn {k, v} ->
       {String.to_atom(k), v}

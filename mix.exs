@@ -4,7 +4,7 @@ defmodule ExAliyunOpenapi.MixProject do
   def project do
     [
       app: :ex_aliyun_openapi,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -32,9 +32,9 @@ defmodule ExAliyunOpenapi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.20", only: :dev, runtime: false},
       {:tesla, "~> 1.2"},
-      {:jason, ">= 1.0.0"},
+      {:jason, "~> 1.1"},
       {:timex, "~> 3.4"},
       {:elixir_uuid, "~> 1.2"}
     ]

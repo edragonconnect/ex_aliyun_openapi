@@ -63,9 +63,3 @@ assert {:ok, _} = ExAliyunOpenapi.call_cps(params)
 ## To add more services to this repo
 You should add the service client to `http.ex`.
 Then add the common params and url to `middleware.ex`.
-
-------
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_aliyun_openapi](https://hexdocs.pm/ex_aliyun_openapi).

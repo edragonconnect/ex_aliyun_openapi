@@ -1,5 +1,7 @@
 defmodule ExAliyunOpenapi.Http do
-  @moduledoc false
+  @moduledoc """
+  Tesla clients for Aliyun OpenAPI.
+  """
 
   use Tesla
 

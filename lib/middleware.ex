@@ -1,5 +1,8 @@
 defmodule ExAliyunOpenapi.Middleware do
-  @moduledoc false
+  @moduledoc """
+  Middlewares for Aliyun OpenAPI.
+  * Common args are added in middlewares. You should pass addition args by ExAliyunOpenapi functions.
+  """
 
   @behaviour Tesla.Middleware
 
