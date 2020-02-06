@@ -26,7 +26,7 @@ defmodule ExAliyunOpenapi.Utils do
     |> Base.encode64()
   end
 
-  defp format_string_to_sign(params) do
+  def format_string_to_sign(params) do
     format_string =
       params
       |> Map.keys()
@@ -40,6 +40,29 @@ defmodule ExAliyunOpenapi.Utils do
       |> URI.encode(&URI.char_unreserved?/1)
 
     "POST&%2F&" <> format_string
+  end
+  
+  def format_string_to_sign2(params) do
+    format_string =
+      params
+      |> Enum.sort() 
+      |> URI.encode_query()
+      |> standard_urlencode()
+      |> URI.encode_www_form()
+      |> standard_urlencode()
+
+    "POST&%2F&" <> format_string
+  end
+
+  def standard_urlencode(str) do
+    str 
+    |> String.replace(["+", "*", "%7E"], fn char -> 
+        case char do
+          "+" -> "%20"
+          "*" -> "%2A"
+          "%7E" -> "~"
+        end
+      end)
   end
 
   def get_timestamp do
