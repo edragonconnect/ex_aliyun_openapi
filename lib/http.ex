@@ -7,19 +7,22 @@ defmodule ExAliyunOpenapi.Http do
 
   def client(:cps, params) do
     Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :cps, params: params}
+      {ExAliyunOpenapi.Middleware, service: :cps, params: params},
+      Tesla.Middleware.FormUrlencoded
     ])
   end
 
   def client(:sts, params) do
     Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :sts, params: params}
+      {ExAliyunOpenapi.Middleware, service: :sts, params: params},
+      Tesla.Middleware.FormUrlencoded
     ])
   end
 
   def client(:sms, params) do
     Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :sms, params: params}
+      {ExAliyunOpenapi.Middleware, service: :sms, params: params},
+      Tesla.Middleware.FormUrlencoded
     ])
   end
 

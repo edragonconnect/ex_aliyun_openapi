@@ -5,12 +5,14 @@ defmodule ExAliyunOpenapi.Utils do
 
   def get_query(common_params, params, access_key_secret) do
     sign_params = common_params |> Map.merge(params)
-    string_to_sign = format_string_to_sign(sign_params) |> String.replace("%2B", "%2520")
+
+    string_to_sign = format_string_to_sign(sign_params)
+
     signature = sign(access_key_secret, string_to_sign)
 
     sign_params
     |> Map.put("Signature", signature)
-    |> to_keyword_list
+    |> Map.to_list()
   end
 
   def get_access_info(service) do
@@ -30,19 +32,14 @@ defmodule ExAliyunOpenapi.Utils do
       |> Map.keys()
       |> Enum.sort()
       |> Enum.map(fn key ->
-        "#{URI.encode_www_form(key)}=#{URI.encode_www_form(to_string(params[key]))}"
+        "#{URI.encode(key, &URI.char_unreserved?/1)}=#{
+          URI.encode(to_string(params[key]), &URI.char_unreserved?/1)
+        }"
       end)
       |> Enum.join("&")
-      |> URI.encode_www_form()
+      |> URI.encode(&URI.char_unreserved?/1)
 
     "POST&%2F&" <> format_string
-  end
-
-  defp to_keyword_list(map) do
-    map
-    |> Enum.map(fn {k, v} ->
-      {String.to_atom(k), v}
-    end)
   end
 
   def get_timestamp do
