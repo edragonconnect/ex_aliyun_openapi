@@ -13,10 +13,11 @@ defmodule ExAliyunOpenapi.Http do
   end
 
   def client(:sts, params) do
+    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
     Tesla.client([
       {ExAliyunOpenapi.Middleware, service: :sts, params: params},
-      Tesla.Middleware.FormUrlencoded
-    ])
+      Tesla.Middleware.FormUrlencoded],
+      adapter)
   end
 
   def client(:sms, params) do
