@@ -19,7 +19,13 @@ defmodule ExAliyunOpenapi.Middleware do
   end
 
   defp prepare_request(env, :cps, params) do
-    access_info = Utils.get_access_info(:cps)
+    access_info = case params[:cps] do
+      nil ->
+        Utils.get_access_info(:cps)
+      other ->
+        other
+    end
+    params = Map.delete(params, :cps) 
     access_key_id = Keyword.get(access_info, :access_key_id)
     access_key_secret = Keyword.get(access_info, :access_key_secret)
     {timestamp, signature_nonce} = Utils.get_timestamp()
@@ -43,7 +49,13 @@ defmodule ExAliyunOpenapi.Middleware do
   end
 
   defp prepare_request(env, :sts, params) do
-    access_info = Utils.get_access_info(:sts)
+    access_info = case params[:sts] do
+      nil ->
+        Utils.get_access_info(:sts)
+      other ->
+        other
+    end
+    params = Map.delete(params, :sts) 
     access_key_id = Keyword.get(access_info, :access_key_id)
     access_key_secret = Keyword.get(access_info, :access_key_secret)
     {timestamp, signature_nonce} = Utils.get_timestamp()
@@ -66,7 +78,13 @@ defmodule ExAliyunOpenapi.Middleware do
   end
 
   defp prepare_request(env, :sms, params) do
-    access_info = Utils.get_access_info(:sms)
+    access_info = case params[:sms] do
+      nil ->
+        Utils.get_access_info(:sms)
+      other ->
+        other
+    end
+    params = Map.delete(params, :sms) 
     access_key_id = Keyword.get(access_info, :access_key_id)
     access_key_secret = Keyword.get(access_info, :access_key_secret)
     {timestamp, signature_nonce} = Utils.get_timestamp()
