@@ -6,25 +6,39 @@ defmodule ExAliyunOpenapi.Http do
   use Tesla
 
   def client(:cps, params) do
-    Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :cps, params: params},
-      Tesla.Middleware.FormUrlencoded
-    ])
+    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+
+    Tesla.client(
+      [
+        {ExAliyunOpenapi.Middleware, service: :cps, params: params},
+        Tesla.Middleware.FormUrlencoded
+      ],
+      adapter
+    )
   end
 
   def client(:sts, params) do
     adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
-    Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :sts, params: params},
-      Tesla.Middleware.FormUrlencoded],
-      adapter)
+
+    Tesla.client(
+      [
+        {ExAliyunOpenapi.Middleware, service: :sts, params: params},
+        Tesla.Middleware.FormUrlencoded
+      ],
+      adapter
+    )
   end
 
   def client(:sms, params) do
-    Tesla.client([
-      {ExAliyunOpenapi.Middleware, service: :sms, params: params},
-      Tesla.Middleware.FormUrlencoded
-    ])
+    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+
+    Tesla.client(
+      [
+        {ExAliyunOpenapi.Middleware, service: :sms, params: params},
+        Tesla.Middleware.FormUrlencoded
+      ],
+      adapter
+    )
   end
 
   def post(client) do
