@@ -2,8 +2,9 @@ defmodule ExAliyunOpenapi.Http do
   @moduledoc """
   Tesla clients for Aliyun OpenAPI.
   """
-
   use Tesla
+
+  require Logger
 
   def client(:cps, params) do
     adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
@@ -42,6 +43,14 @@ defmodule ExAliyunOpenapi.Http do
   end
 
   def post(client) do
-    post(client, "/", [])
+    res = post(client, "/", [])
+    case res do
+      {:ok, _} -> 
+        res
+      error -> 
+        Logger.error(fn -> "ExAliyunOpenapi error with client: #{inspect client} and error: #{inspect error}" end)
+        error
+    end
   end
+
 end
