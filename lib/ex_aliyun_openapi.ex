@@ -34,4 +34,13 @@ defmodule ExAliyunOpenapi do
     Http.client(:sms, params)
     |> Http.post()
   end
+
+  @doc """
+  Funtion to call Global Aliyun Short Message Service(国际短信服务).
+  You can read the doc in [https://www.alibabacloud.com/help/zh/doc-detail/106591.htm?spm=a2c63.p38356.b99.21.1bb57d908cOskx](https://www.alibabacloud.com/help/zh/doc-detail/106591.htm?spm=a2c63.p38356.b99.21.1bb57d908cOskx)
+  """
+  def call_global_sms(params) do
+    Http.client(:global_sms, params)
+    |> Http.post()
+  end
 end
