@@ -15,7 +15,7 @@ by adding `ex_aliyun_openapi` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ex_aliyun_openapi, "~> 0.1.0"}
+    {:ex_aliyun_openapi, "~> 0.3.0"}
   ]
 end
 ```
