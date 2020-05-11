@@ -42,6 +42,18 @@ defmodule ExAliyunOpenapi.Http do
     )
   end
 
+  def client(:global_sms, params) do
+    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+
+    Tesla.client(
+      [
+        {ExAliyunOpenapi.Middleware, service: :global_sms, params: params},
+        Tesla.Middleware.FormUrlencoded
+      ],
+      adapter
+    )
+  end
+
   def post(client) do
     res = post(client, "/", [])
     case res do

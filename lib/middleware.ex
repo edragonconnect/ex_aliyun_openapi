@@ -116,6 +116,39 @@ defmodule ExAliyunOpenapi.Middleware do
     |> Map.put(:url, "https://dysmsapi.aliyuncs.com")
   end
 
+  defp prepare_request(env, :global_sms, params) do
+    access_info =
+      case params[:global_sms] do
+        nil ->
+          Utils.get_access_info(:global_sms)
+
+        other ->
+          other
+      end
+
+    params = Map.delete(params, :global_sms)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+    {timestamp, signature_nonce} = Utils.get_timestamp()
+
+    common_params = %{
+      "Format" => "JSON",
+      "Version" => "2018-05-01",
+      "AccessKeyId" => access_key_id,
+      "Timestamp" => timestamp,
+      "SignatureMethod" => "HMAC-SHA1",
+      "SignatureVersion" => "1.0",
+      "SignatureNonce" => signature_nonce,
+      "RegionId" => "ap-southeast-1"
+    }
+
+    query = Utils.get_query(common_params, params, access_key_secret)
+
+    env
+    |> Tesla.put_body(query)
+    |> Map.put(:url, "https://sms-intl.ap-southeast-1.aliyuncs.com")
+  end
+
   defp decode_response(env) do
     case env do
       {:ok, %Tesla.Env{status: 200, body: body}} ->
