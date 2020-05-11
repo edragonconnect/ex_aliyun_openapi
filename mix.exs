@@ -37,6 +37,7 @@ defmodule ExAliyunOpenapi.MixProject do
       {:mint, "~> 1.0"},
       {:jason, "~> 1.1"},
       {:timex, "~> 3.4"},
+      {:castore, "~> 0.1.5"},
       {:elixir_uuid, "~> 1.2"}
     ]
   end

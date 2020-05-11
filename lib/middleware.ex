@@ -112,7 +112,7 @@ defmodule ExAliyunOpenapi.Middleware do
     query = Utils.get_query(common_params, params, access_key_secret)
 
     env
-    |> Map.put(:query, query)
+    |> Tesla.put_body(query)
     |> Map.put(:url, "https://dysmsapi.aliyuncs.com")
   end
 

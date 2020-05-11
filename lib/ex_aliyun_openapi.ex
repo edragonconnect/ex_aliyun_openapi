@@ -25,4 +25,13 @@ defmodule ExAliyunOpenapi do
     Http.client(:sts, params)
     |> Http.post()
   end
+
+  @doc """
+  Funtion to call Aliyun Short Message Service(短信服务).
+  You can read the doc in [https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11186623.6.624.4d3d30bbtYZP9D](https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11186623.6.624.4d3d30bbtYZP9D)
+  """
+  def call_sms(params) do
+    Http.client(:sms, params)
+    |> Http.post()
+  end
 end
