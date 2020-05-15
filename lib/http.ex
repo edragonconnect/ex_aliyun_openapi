@@ -7,7 +7,7 @@ defmodule ExAliyunOpenapi.Http do
   require Logger
 
   def client(:cps, params) do
-    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+    adapter = {Tesla.Adapter.Hackney, [recv_timeout: 30_000, ssl_options: [versions: [:'tlsv1.3', :'tlsv1.2']]]}
 
     Tesla.client(
       [
@@ -19,7 +19,7 @@ defmodule ExAliyunOpenapi.Http do
   end
 
   def client(:sts, params) do
-    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+    adapter = {Tesla.Adapter.Hackney, [recv_timeout: 30_000, ssl_options: [versions: [:'tlsv1.3', :'tlsv1.2']]]}
 
     Tesla.client(
       [
@@ -31,7 +31,7 @@ defmodule ExAliyunOpenapi.Http do
   end
 
   def client(:sms, params) do
-    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+    adapter = {Tesla.Adapter.Hackney, [recv_timeout: 30_000, ssl_options: [versions: [:'tlsv1.3', :'tlsv1.2']]]}
 
     Tesla.client(
       [
@@ -43,7 +43,7 @@ defmodule ExAliyunOpenapi.Http do
   end
 
   def client(:global_sms, params) do
-    adapter = {Tesla.Adapter.Mint, [timeout: 30_000]}
+    adapter = {Tesla.Adapter.Hackney, [recv_timeout: 30_000, ssl_options: [versions: [:'tlsv1.3', :'tlsv1.2']]]}
 
     Tesla.client(
       [
