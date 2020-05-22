@@ -25,4 +25,5 @@ ex_aliyun_openapi-*.tar
 /config/*.secret.exs
 
 .DS_Store
-
+*.iml
+/.idea/

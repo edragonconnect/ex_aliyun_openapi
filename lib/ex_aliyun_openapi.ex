@@ -43,4 +43,13 @@ defmodule ExAliyunOpenapi do
     Http.client(:global_sms, params)
     |> Http.post()
   end
+
+  @doc """
+  Funtion to call Aliyun Authenticate Sig Service(人机验证).
+  You can read the doc in [https://help.aliyun.com/document_detail/66340.html](https://help.aliyun.com/document_detail/66340.html)
+  """
+  def call_afs(params) do
+    Http.client(:afs, params)
+    |> Http.post()
+  end
 end

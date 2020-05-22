@@ -54,6 +54,18 @@ defmodule ExAliyunOpenapi.Http do
     )
   end
 
+  def client(:afs, params) do
+    adapter = {Tesla.Adapter.Hackney, [recv_timeout: 30_000, ssl_options: [versions: [:'tlsv1.3', :'tlsv1.2']]]}
+
+    Tesla.client(
+      [
+        {ExAliyunOpenapi.Middleware, service: :afs, params: params},
+        Tesla.Middleware.FormUrlencoded
+      ],
+      adapter
+    )
+  end
+
   def post(client) do
     res = post(client, "/", [])
     case res do
