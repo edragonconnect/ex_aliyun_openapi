@@ -1,4 +1,4 @@
-defmodule ExAliyunOpenapi.MixProject do
+defmodule ExAliyun.OpenAPI.MixProject do
   use Mix.Project
 
   def project do
@@ -9,7 +9,7 @@ defmodule ExAliyunOpenapi.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [extras: ["README.md"]],
-      description: "Aliyun openapi for elixir",
+      description: "Aliyun OpenAPI for elixir",
       source_url: "https://github.com/edragonconnect/ex_aliyun_openapi",
       package: package()
     ]

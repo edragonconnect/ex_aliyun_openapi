@@ -1,14 +1,14 @@
 defmodule ExAliyunCpsiTest do
   use ExUnit.Case
-  doctest ExAliyunOpenapi
+  doctest ExAliyun.OpenAPI
 
   test "cps: ListSummaryApps" do
-    assert {:ok, _} = ExAliyunOpenapi.call_cps(%{"Action" => "ListSummaryApps"})
+    assert {:ok, _} = ExAliyun.OpenAPI.call_cps(%{"Action" => "ListSummaryApps"})
   end
 
   test "cps: ListTags" do
     assert {:ok, _} =
-             ExAliyunOpenapi.call_cps(%{"Action" => "ListTags", "AppKey" => "* Your app key *"})
+             ExAliyun.OpenAPI.call_cps(%{"Action" => "ListTags", "AppKey" => "* Your app key *"})
   end
 
   test "cps: Push -- superior -- ios" do
@@ -32,6 +32,6 @@ defmodule ExAliyunCpsiTest do
       "iOSSubtitle" => "It is a subtitle"
     }
 
-    assert {:ok, _} = ExAliyunOpenapi.call_cps(params)
+    assert {:ok, _} = ExAliyun.OpenAPI.call_cps(params)
   end
 end

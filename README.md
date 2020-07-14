@@ -1,15 +1,16 @@
-# ExAliyunOpenapi
+# ExAliyun.OpenAPI
 
 ## Description
-ExAliyunOpenapi supports aliyun openapis:
+ExAliyun.OpenAPI supports aliyun openapis:
 * CPS(移动推送服务)
 * STS(短期访问权限管理)
 * SMS(短信服务)
+* AFS(人机验证)
 * more to be supported
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+If [available in Hex](https://hex.pm/packages/ex_aliyun_openapi), the package can be installed
 by adding `ex_aliyun_openapi` to your list of dependencies in `mix.exs`:
 
 ```elixir
@@ -38,6 +39,10 @@ config :ex_aliyun_openapi, :sms,
 config :ex_aliyun_openapi, :global_sms,
   access_key_id: "YOUR SMS ACCESS KEY ID",
   access_key_secret: "YOUR SMS ACCESS KEY SECRET"
+
+config :ex_aliyun_openapi, :afs,
+  access_key_id: "YOUR SMS ACCESS KEY ID",
+  access_key_secret: "YOUR SMS ACCESS KEY SECRET"
 ```
 
 ## Call the apis 
@@ -50,7 +55,11 @@ params = %{
   "RoleSessionName" => "default",
   "DurationSeconds" => 3600,
 }
-ExAliyunOpenapi.call_sts(params)
+ExAliyun.OpenAPI.call_sts(params)
+
+# or
+
+ExAliyun.OpenAPI.call_sts(params, access_key_id: "ID", access_key_secret: "SECRET")
 ```
 ```elixir
 params = %{
@@ -61,7 +70,11 @@ params = %{
   "Title" => "TEST title",
   "Body" => "Hello, this is the notice body"
 }
-assert {:ok, _} = ExAliyunOpenapi.call_cps(params)
+ExAliyun.OpenAPI.call_cps(params)
+
+# or
+
+ExAliyun.OpenAPI.call_cps(params, access_key_id: "ID", access_key_secret: "SECRET")
 ```
 
 ```elixir
@@ -72,7 +85,11 @@ params = %{
   "TemplateParam" => "Your Json Params",
   "Action" => "SendMessageWithTemplate"
 }
-assert {:ok, _} = ExAliyunOpenapi.call_global_sms(params)
+ExAliyun.OpenAPI.call_global_sms(params)
+
+# or
+
+ExAliyun.OpenAPI.call_global_sms(params, access_key_id: "ID", access_key_secret: "SECRET")
 ```
 
 ## To add more services to this repo

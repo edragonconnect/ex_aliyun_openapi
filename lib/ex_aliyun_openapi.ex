@@ -1,55 +1,153 @@
-defmodule ExAliyunOpenapi do
+defmodule ExAliyun.OpenAPI do
   @moduledoc """
-  Functions to call aliyun openapi.
-  * Common args are added by ExAliyunOpenapi.Middleware.
+  Functions to call Aliyun OpenAPI.
   * You can just put addition args.
-  * You can find the api params in [https://help.aliyun.com](https://help.aliyun.com).
+  * You can find the api params in [Official Link](https://help.aliyun.com).
   """
 
-  alias ExAliyunOpenapi.Http
+  use Tesla, only: [:post]
+  alias ExAliyun.OpenAPI.Utils
 
-  @doc """
-  Function to call Aliyun Cloud Push Service(移动推送).
-  You can read the doc in [https://help.aliyun.com/document_detail/48038.html](https://help.aliyun.com/document_detail/48038.html).
-  """
-  def call_cps(params) do
-    Http.client(:cps, params)
-    |> Http.post()
+  adapter(
+    {Tesla.Adapter.Hackney,
+     [recv_timeout: 30_000, ssl_options: [versions: [:"tlsv1.3", :"tlsv1.2"]]]}
+  )
+
+  plug(Tesla.Middleware.Logger)
+  plug(Tesla.Middleware.FormUrlencoded)
+  plug(Tesla.Middleware.DecodeJson)
+
+  @compile {:inline, get_access_info: 1}
+  def get_access_info(service) do
+    Application.get_env(:ex_aliyun_openapi, service)
+  end
+
+  @compile {:inline, get_timestamp: 0}
+  def get_timestamp do
+    Timex.now()
+    |> Timex.format!("%FT%TZ", :strftime)
   end
 
   @doc """
-  Function to call Aliyun Security Token Service(短期访问权限).
-  You can read the doc in [https://help.aliyun.com/document_detail/28576.html](https://help.aliyun.com/document_detail/28576.html).
+  Aliyun Cloud Push Service(移动推送).
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/48038.html).
   """
-  def call_sts(params) do
-    Http.client(:sts, params)
-    |> Http.post()
+  def call_cps(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:cps)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "RegionId" => "cn-hangzhou",
+        "Version" => "2016-08-01",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://cloudpush.aliyuncs.com", params)
   end
 
   @doc """
-  Funtion to call Aliyun Short Message Service(短信服务).
-  You can read the doc in [https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11186623.6.624.4d3d30bbtYZP9D](https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11186623.6.624.4d3d30bbtYZP9D)
+  Aliyun Security Token Service(短期访问权限).
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/28576.html).
   """
-  def call_sms(params) do
-    Http.client(:sms, params)
-    |> Http.post()
+  def call_sts(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:sts)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2015-04-01",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://sts.aliyuncs.com", params)
   end
 
   @doc """
-  Funtion to call Global Aliyun Short Message Service(国际短信服务).
-  You can read the doc in [https://www.alibabacloud.com/help/zh/doc-detail/106591.htm?spm=a2c63.p38356.b99.21.1bb57d908cOskx](https://www.alibabacloud.com/help/zh/doc-detail/106591.htm?spm=a2c63.p38356.b99.21.1bb57d908cOskx)
+  Aliyun Short Message Service(短信服务).
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/101414.html).
   """
-  def call_global_sms(params) do
-    Http.client(:global_sms, params)
-    |> Http.post()
+  def call_sms(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:sms)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2017-05-25",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "RegionId" => "cn-hangzhou",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://dysmsapi.aliyuncs.com", params)
   end
 
   @doc """
-  Funtion to call Aliyun Authenticate Sig Service(人机验证).
-  You can read the doc in [https://help.aliyun.com/document_detail/66340.html](https://help.aliyun.com/document_detail/66340.html)
+  Global Aliyun Short Message Service(国际短信服务).
+  You can read the doc in [Official Link](https://www.alibabacloud.com/help/zh/doc-detail/106591.htm).
   """
-  def call_afs(params) do
-    Http.client(:afs, params)
-    |> Http.post()
+  def call_global_sms(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:global_sms)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2018-05-01",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "RegionId" => "ap-southeast-1",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://sms-intl.ap-southeast-1.aliyuncs.com", params)
+  end
+
+  @doc """
+  Aliyun Authenticate Sig Service(人机验证).
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/66340.html).
+  """
+  def call_afs(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:afs)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2018-01-12",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://afs.aliyuncs.com", params)
   end
 end

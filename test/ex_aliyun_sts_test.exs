@@ -1,6 +1,6 @@
 defmodule ExAliyunStsTest do
   use ExUnit.Case
-  doctest ExAliyunOpenapi
+  doctest ExAliyun.OpenAPI
 
   test "sts: AssumeRole" do
     params = %{
@@ -10,7 +10,7 @@ defmodule ExAliyunStsTest do
       "DurationSeconds" => 3600
     }
 
-    assert {:ok, _} = ExAliyunOpenapi.call_sts(params) |> IO.inspect()
+    assert {:ok, _} = ExAliyun.OpenAPI.call_sts(params) |> IO.inspect()
   end
 
   test "sts: GetCallerIdentity" do
@@ -18,6 +18,6 @@ defmodule ExAliyunStsTest do
       "Action" => "GetCallerIdentity"
     }
 
-    assert {:ok, _} = ExAliyunOpenapi.call_sts(params) |> IO.inspect()
+    assert {:ok, _} = ExAliyun.OpenAPI.call_sts(params) |> IO.inspect()
   end
 end
