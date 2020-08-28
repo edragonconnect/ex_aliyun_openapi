@@ -150,4 +150,29 @@ defmodule ExAliyun.OpenAPI do
 
     post("https://afs.aliyuncs.com", params)
   end
+
+  @doc """
+  Aliyun Project Task Service of CodeUp (云效任务管理).
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/179127.html).
+  """
+  def call_codeup(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:codeup)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+    {region, params} = Map.pop(params, "region", "cn-hangzhou")
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2020-03-03",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://api-devops.#{region}.aliyuncs.com", params)
+  end
 end

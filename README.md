@@ -6,6 +6,7 @@ ExAliyun.OpenAPI supports aliyun openapis:
 * STS(短期访问权限管理)
 * SMS(短信服务)
 * AFS(人机验证)
+* CodeUp(云效任务管理)
 * more to be supported
 
 ## Installation
@@ -24,26 +25,11 @@ end
 ## Configuration
 You should add configs for your services in this way.
 ```elixir
-config :ex_aliyun_openapi, :cps,
+config :ex_aliyun_openapi, type,
   access_key_id: "YOUR CPS ACCESS KEY ID",
   access_key_secret: "YOUR CPS ACCESS KEY SECRET"
-
-config :ex_aliyun_openapi, :sts,
-  access_key_id: "YOUR STS ACCESS KEY ID",
-  access_key_secret: "YOUR STS ACCESS KEY SECRET"
-
-config :ex_aliyun_openapi, :sms,
-  access_key_id: "YOUR SMS ACCESS KEY ID",
-  access_key_secret: "YOUR SMS ACCESS KEY SECRET"
-
-config :ex_aliyun_openapi, :global_sms,
-  access_key_id: "YOUR SMS ACCESS KEY ID",
-  access_key_secret: "YOUR SMS ACCESS KEY SECRET"
-
-config :ex_aliyun_openapi, :afs,
-  access_key_id: "YOUR SMS ACCESS KEY ID",
-  access_key_secret: "YOUR SMS ACCESS KEY SECRET"
 ```
+type support `[:cps, :sts, :sms, :global_sms, :afs, :codeup]`
 
 ## Call the apis 
 You can find the api params in [https://help.aliyun.com](https://help.aliyun.com).
@@ -75,21 +61,6 @@ ExAliyun.OpenAPI.call_cps(params)
 # or
 
 ExAliyun.OpenAPI.call_cps(params, access_key_id: "ID", access_key_secret: "SECRET")
-```
-
-```elixir
-params = %{
-  "To" => "Your Phone Num",
-  "From" => "Your SignName",
-  "TemplateCode" => "Your TemplateCode",
-  "TemplateParam" => "Your Json Params",
-  "Action" => "SendMessageWithTemplate"
-}
-ExAliyun.OpenAPI.call_global_sms(params)
-
-# or
-
-ExAliyun.OpenAPI.call_global_sms(params, access_key_id: "ID", access_key_secret: "SECRET")
 ```
 
 ## To add more services to this repo
