@@ -10,7 +10,7 @@ defmodule ExAliyun.OpenAPI do
 
   adapter(
     {Tesla.Adapter.Hackney,
-     [recv_timeout: 30_000, ssl_options: [versions: [:"tlsv1.3", :"tlsv1.2"]]]}
+     [recv_timeout: 30_000]}
   )
 
   plug(Tesla.Middleware.Logger)
@@ -124,7 +124,7 @@ defmodule ExAliyun.OpenAPI do
       }
       |> Utils.append_signature(params, access_key_secret)
 
-    post("http://sms-intl.ap-southeast-1.aliyuncs.com", params)
+    post("https://sms-intl.ap-southeast-1.aliyuncs.com", params)
   end
 
   @doc """
