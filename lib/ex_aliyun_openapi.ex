@@ -124,7 +124,7 @@ defmodule ExAliyun.OpenAPI do
       }
       |> Utils.append_signature(params, access_key_secret)
 
-    post("https://sms-intl.ap-southeast-1.aliyuncs.com", params)
+    post("http://sms-intl.ap-southeast-1.aliyuncs.com", params)
   end
 
   @doc """
