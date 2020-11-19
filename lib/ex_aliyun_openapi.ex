@@ -8,11 +8,7 @@ defmodule ExAliyun.OpenAPI do
   use Tesla, only: [:post]
   alias ExAliyun.OpenAPI.Utils
 
-  adapter(
-    {Tesla.Adapter.Hackney,
-     [recv_timeout: 30_000]}
-  )
-
+  adapter({Tesla.Adapter.Finch, [name: ExAliyun.OpenAPI.Finch, receive_timeout: 30_000]})
   plug(Tesla.Middleware.Logger)
   plug(Tesla.Middleware.FormUrlencoded)
   plug(Tesla.Middleware.DecodeJson)

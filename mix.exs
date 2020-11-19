@@ -18,6 +18,7 @@ defmodule ExAliyun.OpenAPI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {ExAliyun.OpenAPI.Application, []},
       extra_applications: [:logger]
     ]
   end
@@ -33,8 +34,8 @@ defmodule ExAliyun.OpenAPI.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-      {:tesla, "~> 1.3"},
-      {:hackney, "~> 1.15"},
+      {:tesla, "~> 1.4"},
+      {:finch, "~> 0.5"},
       {:jason, "~> 1.1"},
       {:timex, "~> 3.4"},
       {:elixir_uuid, "~> 1.2"}
