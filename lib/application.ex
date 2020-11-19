@@ -8,11 +8,7 @@ defmodule ExAliyun.OpenAPI.Application do
     count = Application.get_env(app, :pool_count, 8)
 
     children = [
-      {Finch,
-       name: ExAliyun.OpenAPI.Finch,
-       pools: %{
-         :default => [size: size, count: count]
-       }}
+      {Finch, name: ExAliyun.OpenAPI.Finch, pools: %{default: [size: size, count: count]}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
