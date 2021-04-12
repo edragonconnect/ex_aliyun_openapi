@@ -171,4 +171,29 @@ defmodule ExAliyun.OpenAPI do
 
     post("https://api-devops.#{region}.aliyuncs.com", params)
   end
+
+  @doc """
+  Aliyun Describe Ipv4/6 Location Service(查询IPv4地理位置信息)
+  Please note that when using API to query IP Location Information, you need to open the relevant service in the Product package page first.
+  You can read the doc in [Official Link](https://help.aliyun.com/document_detail/170546.html?spm=a2c4g.11186623.2.13.4acc1d5cnoHpyi).
+  """
+  def call_geoip(params, access_info \\ nil) do
+    access_info = with nil <- access_info, do: get_access_info(:geoip)
+    access_key_id = Keyword.get(access_info, :access_key_id)
+    access_key_secret = Keyword.get(access_info, :access_key_secret)
+
+    params =
+      %{
+        "Format" => "JSON",
+        "Version" => "2020-01-01",
+        "SignatureMethod" => "HMAC-SHA1",
+        "SignatureVersion" => "1.0",
+        "AccessKeyId" => access_key_id,
+        "Timestamp" => get_timestamp(),
+        "SignatureNonce" => UUID.uuid1()
+      }
+      |> Utils.append_signature(params, access_key_secret)
+
+    post("https://geoip.aliyuncs.com", params)
+  end
 end
