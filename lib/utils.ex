@@ -26,7 +26,7 @@ defmodule ExAliyun.OpenAPI.Utils do
       |> Stream.map(fn {key, value} ->
         URI.encode(key, &URI.char_unreserved?/1) <>
           "=" <>
-          URI.encode(value, &URI.char_unreserved?/1)
+          URI.encode(to_string(value), &URI.char_unreserved?/1)
       end)
       |> Enum.join("&")
       |> URI.encode(&URI.char_unreserved?/1)
