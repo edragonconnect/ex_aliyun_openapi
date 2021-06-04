@@ -15,8 +15,13 @@ defmodule ExAliyun.OpenAPI.Utils do
 
   @compile {:inline, sign: 2}
   def sign(access_key_secret, string_to_sign) do
-    :crypto.hmac(:sha, access_key_secret <> "&", string_to_sign)
-    |> Base.encode64()
+    Base.encode64(hmac_fun(:sha, access_key_secret <> "&").(string_to_sign))
+  end
+
+  if Code.ensure_loaded?(:crypto) and function_exported?(:crypto, :mac, 4) do
+    defp hmac_fun(digest, key), do: &:crypto.mac(:hmac, digest, key, &1)
+  else
+    defp hmac_fun(digest, key), do: &:crypto.hmac(digest, key, &1)
   end
 
   def format_string_to_sign(params) do
