@@ -23,7 +23,7 @@ by adding `ex_aliyun_openapi` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ex_aliyun_openapi, "~> 0.8.0"}
+    {:ex_aliyun_openapi, "~> 0.8"}
   ]
 end
 ```
@@ -37,7 +37,7 @@ config :ex_aliyun_openapi, type,
 ```
 type support `[:cps, :sts, :sms, :global_sms, :afs, :codeup, :geoip]`
 
-## Call the apis 
+## Call the apis
 You can find the api params in [https://help.aliyun.com](https://help.aliyun.com).
 Then you can choose the service, and just put the params to it.
 ```elixir

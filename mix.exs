@@ -4,8 +4,8 @@ defmodule ExAliyun.OpenAPI.MixProject do
   def project do
     [
       app: :ex_aliyun_openapi,
-      version: "0.8.1",
-      elixir: "~> 1.6",
+      version: "0.8.2",
+      elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [extras: ["README.md"]],
@@ -35,7 +35,7 @@ defmodule ExAliyun.OpenAPI.MixProject do
     [
       {:ex_doc, "~> 0.20", only: :dev, runtime: false},
       {:tesla, "~> 1.4"},
-      {:finch, "~> 0.5"},
+      {:finch, "~> 0.7"},
       {:jason, "~> 1.1"},
       {:timex, "~> 3.4"},
       {:elixir_uuid, "~> 1.2"}
