@@ -42,7 +42,7 @@ defmodule ExAliyunCodeUpTest do
   end
 
   test "test:createtask" do
-    ts = Timex.now() |> Timex.format!("%FT%T", :strftime)
+    ts = Timex.now() |> Timex.lformat!("%FT%T", "en", :strftime)
 
     create_params = %{
       "Action" => "CreateDevopsProjectTask",

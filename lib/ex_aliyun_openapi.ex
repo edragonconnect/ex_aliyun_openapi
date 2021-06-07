@@ -21,7 +21,7 @@ defmodule ExAliyun.OpenAPI do
   @compile {:inline, get_timestamp: 0}
   def get_timestamp do
     Timex.now()
-    |> Timex.format!("%FT%TZ", :strftime)
+    |> Timex.lformat!("%FT%TZ", "en", :strftime)
   end
 
   @doc """

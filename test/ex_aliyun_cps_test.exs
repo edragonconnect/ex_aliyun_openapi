@@ -12,7 +12,6 @@ defmodule ExAliyunCpsiTest do
   end
 
   test "cps: Push -- superior -- ios" do
-    Timex.now() |> Timex.format!("%Y-%m-%dT%H:%M:%SZ", :strftime)
     push_time = "2018-07-20T09:33:39Z"
     # target_value = %{and: [%{tag: "trevor"}, %{tag: "en"}]} |> Jason.encode!
     target_value = %{tag: "trevor"} |> Jason.encode!()
