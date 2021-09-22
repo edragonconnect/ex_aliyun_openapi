@@ -57,6 +57,8 @@ defmodule ExAliyun.OpenAPI do
     access_info = with nil <- access_info, do: get_access_info(:sts)
     access_key_id = Keyword.get(access_info, :access_key_id)
     access_key_secret = Keyword.get(access_info, :access_key_secret)
+    # support host config, depends on your ECS node.(https://help.aliyun.com/document_detail/66053.html?spm=a2c6h.13066369.0.0.343e6ebaSfsUKj#reference_sdg_3pv_xdb)
+    host = Keyword.get(access_info, :host, "https://sts.aliyuncs.com")
 
     params =
       %{
@@ -70,7 +72,7 @@ defmodule ExAliyun.OpenAPI do
       }
       |> Utils.append_signature(params, access_key_secret)
 
-    post("https://sts.aliyuncs.com", params)
+    post(host, params)
   end
 
   @doc """
