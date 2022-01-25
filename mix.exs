@@ -33,7 +33,7 @@ defmodule ExAliyun.OpenAPI.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false},
       {:tesla, "~> 1.4"},
       {:finch, "~> 0.7"},
       {:jason, "~> 1.1"},
