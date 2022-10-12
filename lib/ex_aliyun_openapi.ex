@@ -9,6 +9,19 @@ defmodule ExAliyun.OpenAPI do
   alias ExAliyun.OpenAPI.Utils
 
   adapter({Tesla.Adapter.Finch, [name: ExAliyun.OpenAPI.Finch, receive_timeout: 30_000]})
+
+  plug(Tesla.Middleware.Retry,
+    delay: 50,
+    max_retries: 2,
+    max_delay: 1000,
+    should_retry: fn
+      {:error, "timeout"} -> true
+      {:error, "socket closed"} -> true
+      {:ok, _} -> false
+      {:error, _} -> false
+    end
+  )
+
   plug(Tesla.Middleware.Logger)
   plug(Tesla.Middleware.FormUrlencoded)
   plug(Tesla.Middleware.DecodeJson)
@@ -57,6 +70,7 @@ defmodule ExAliyun.OpenAPI do
     access_info = with nil <- access_info, do: get_access_info(:sts)
     access_key_id = Keyword.get(access_info, :access_key_id)
     access_key_secret = Keyword.get(access_info, :access_key_secret)
+
     # support host config, depends on your ECS node.(https://help.aliyun.com/document_detail/66053.html?spm=a2c6h.13066369.0.0.343e6ebaSfsUKj#reference_sdg_3pv_xdb)
     host = Keyword.get(access_info, :host, "https://sts.aliyuncs.com")
 
