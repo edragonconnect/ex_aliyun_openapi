@@ -8,9 +8,9 @@ defmodule ExAliyun.OpenAPI do
   use Tesla, only: [:post]
   alias ExAliyun.OpenAPI.Utils
 
-  adapter({Tesla.Adapter.Finch, [name: ExAliyun.OpenAPI.Finch, receive_timeout: 30_000]})
+  adapter {Tesla.Adapter.Finch, [name: ExAliyun.OpenAPI.Finch, receive_timeout: 30_000]}
 
-  plug(Tesla.Middleware.Retry,
+  plug Tesla.Middleware.Retry,
     delay: 50,
     max_retries: 2,
     max_delay: 1000,
@@ -20,11 +20,10 @@ defmodule ExAliyun.OpenAPI do
       {:ok, _} -> false
       {:error, _} -> false
     end
-  )
 
-  plug(Tesla.Middleware.Logger)
-  plug(Tesla.Middleware.FormUrlencoded)
-  plug(Tesla.Middleware.DecodeJson)
+  plug Tesla.Middleware.Logger
+  plug Tesla.Middleware.FormUrlencoded
+  plug Tesla.Middleware.DecodeJson
 
   @compile {:inline, get_access_info: 1}
   def get_access_info(service) do
