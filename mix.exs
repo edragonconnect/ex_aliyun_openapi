@@ -4,7 +4,7 @@ defmodule ExAliyun.OpenAPI.MixProject do
   def project do
     [
       app: :ex_aliyun_openapi,
-      version: "0.8.4",
+      version: "0.8.5",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
