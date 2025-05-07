@@ -54,7 +54,7 @@ defmodule ExAliyun.OpenAPI do
         "SignatureVersion" => "1.0",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -81,7 +81,7 @@ defmodule ExAliyun.OpenAPI do
         "SignatureVersion" => "1.0",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -106,7 +106,7 @@ defmodule ExAliyun.OpenAPI do
         "RegionId" => "cn-hangzhou",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -131,7 +131,7 @@ defmodule ExAliyun.OpenAPI do
         "RegionId" => "ap-southeast-1",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -155,7 +155,7 @@ defmodule ExAliyun.OpenAPI do
         "SignatureVersion" => "1.0",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -180,7 +180,7 @@ defmodule ExAliyun.OpenAPI do
         "SignatureVersion" => "1.0",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
@@ -205,7 +205,7 @@ defmodule ExAliyun.OpenAPI do
         "SignatureVersion" => "1.0",
         "AccessKeyId" => access_key_id,
         "Timestamp" => get_timestamp(),
-        "SignatureNonce" => UUID.uuid1()
+        "SignatureNonce" => Uniq.UUID.uuid1()
       }
       |> Utils.append_signature(params, access_key_secret)
 
