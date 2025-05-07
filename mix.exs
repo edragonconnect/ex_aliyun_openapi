@@ -38,7 +38,7 @@ defmodule ExAliyun.OpenAPI.MixProject do
       {:finch, "~> 0.7"},
       {:jason, "~> 1.1"},
       {:timex, "~> 3.4"},
-      {:elixir_uuid, "~> 1.2"}
+      {:uniq, "~> 0.6"}
     ]
   end
 end
